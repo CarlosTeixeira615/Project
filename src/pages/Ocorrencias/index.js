@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Teste, Grid } from "./styles";
 import { Title, Divider, Text } from "react-native-paper";
 import CustomSwitch from "../../Components/CustomSwitch";
 import { View, Image, ScrollView } from "react-native";
+import api from "../../services/api/index";
 
 const Ocorrencias = ({ navigation }) => {
   const [tabSelected, setTabSelected] = useState(1);
+  const [ocorrencia, setOcorrencia] = useState([]);
+
+  useEffect(() => {
+    getOcorrencias();
+  }, []);
+
+  const getOcorrencias = async () => {
+    let url = `/ocorrencia/all`;
+    const response = await api.get(url);
+    setOcorrencia(response.data);
+  };
 
   const onSelectSwitch = (index) => {
     setTabSelected(index);
@@ -65,41 +77,46 @@ const Ocorrencias = ({ navigation }) => {
           <View style={{ display: "flex", alignItems: "center" }}>
             {tabSelected == 1 ? (
               <>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "90%",
-                    paddingBottom: "2%",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Image
-                    style={{ height: 40, width: 40 }}
-                    source={require("../../images/selected_green.png")}
-                  />
+                {ocorrencia.map((info) => (
+                  <>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        width: "90%",
+                        paddingBottom: "2%",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Image
+                        style={{ height: 40, width: 40 }}
+                        source={require("../../images/selected_green.png")}
+                      />
 
-                  <View>
-                    <Title>Ronda Estacionamento</Title>
-                    <Text style={{ width: "80%" }}>
-                      Visitar todas áreas do estacionament.
-                    </Text>
-                  </View>
-                  <View>
-                    <Text style={{ color: "#BDBDBD" }}>11-11-21</Text>
-                    <Text style={{ color: "#BDBDBD" }}>21:00</Text>
-                  </View>
-                </View>
-                <Divider
-                  style={{
-                    height: "0.3%",
-                    alignItems: "center",
-                    width: "80%",
-                    justifyContent: "center",
-                  }}
-                />
-                <View
+                      <View>
+                        <Title>{info.descricao}</Title>
+                        <Text style={{ width: "80%" }}>
+                          Visitar todas áreas do estacionament.
+                        </Text>
+                      </View>
+                      <View>
+                        <Text style={{ color: "#BDBDBD" }}>11-11-21</Text>
+                        <Text style={{ color: "#BDBDBD" }}>21:00</Text>
+                      </View>
+                    </View>
+                    <Divider
+                      style={{
+                        height: "0.3%",
+                        alignItems: "center",
+                        width: "80%",
+                        justifyContent: "center",
+                      }}
+                    />
+                  </>
+                ))}
+
+                {/* <View
                   style={{
                     display: "flex",
                     flexDirection: "row",
@@ -200,7 +217,7 @@ const Ocorrencias = ({ navigation }) => {
                     width: "80%",
                     justifyContent: "center",
                   }}
-                />
+                /> */}
               </>
             ) : (
               <>
