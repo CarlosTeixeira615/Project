@@ -152,8 +152,6 @@ const Dashboard = ({ navigation }) => {
               justifyContent: 'center',
             }}
             onPress={() => {
-              console.log('Ocorrencias');
-
               navigation.navigate('Ocorrencias');
             }}
           >
@@ -170,7 +168,6 @@ const Dashboard = ({ navigation }) => {
               justifyContent: 'center',
             }}
             onPress={() => {
-              console.log('teste');
               navigation.navigate('Atividades');
             }}
           >

@@ -98,14 +98,19 @@ const Atividades = ({ navigation }) => {
                       />
 
                       <View>
-                        <Title>{info.descricao}</Title>
+                        <Title>{info.nome}</Title>
                         <Text style={{ width: '80%' }}>
                           Visitar todas áreas do estacionament.
                         </Text>
                       </View>
                       <View>
-                        <Text style={{ color: '#BDBDBD' }}>11-11-21</Text>
-                        <Text style={{ color: '#BDBDBD' }}>21:00</Text>
+                        <Text style={{ color: '#BDBDBD' }}>
+                          {' '}
+                          {moment(info.criado_dt).format('DD-MM-YYYY')}
+                        </Text>
+                        <Text style={{ color: '#BDBDBD' }}>
+                          {moment(info.criado_dt).format('HH:mm')}
+                        </Text>
                       </View>
                     </View>
                     <Divider
@@ -287,7 +292,7 @@ const Atividades = ({ navigation }) => {
               </TouchableNativeFeedback>
               <TouchableNativeFeedback
                 onPress={() => {
-                  navigation.navigate('Atividades');
+                  navigation.navigate('Ocorrencias');
                 }}
                 style={{
                   height: 54,
@@ -302,6 +307,9 @@ const Atividades = ({ navigation }) => {
                 <Text>Ocorrências</Text>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback
+                onPress={() => {
+                  navigation.navigate('Atividades');
+                }}
                 style={{
                   height: 54,
                   alignItems: 'center',
