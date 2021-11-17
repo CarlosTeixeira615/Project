@@ -2,26 +2,28 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Teste, Grid } from './styles';
 import { Title, Divider, Text } from 'react-native-paper';
 import CustomSwitch from '../../Components/CustomSwitch';
-import { View, Image, ScrollView } from 'react-native';
+import { View, Image } from 'react-native';
+import api from '../../services/api/index';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import api from '../../services/api';
-import moment from 'moment';
-const Servicos = ({ navigation }) => {
+
+const Atividades = ({ navigation }) => {
   const [tabSelected, setTabSelected] = useState(1);
-  const [servicos, setServicos] = useState([]);
+  const [atividade, setatividade] = useState([]);
 
   useEffect(() => {
-    getServicos();
+    getAtividades();
   }, []);
 
-  const getServicos = useCallback(async () => {
-    const response = await api.get('/servico/all');
-    setServicos(response.data);
-  }, []);
+  const getAtividades = async () => {
+    let url = `/atividade/all`;
+    const response = await api.get(url);
+    setatividade(response.data);
+  };
 
   const onSelectSwitch = useCallback((index) => {
     setTabSelected(index);
   }, []);
+
   return (
     <Container>
       <Teste>
@@ -40,7 +42,6 @@ const Servicos = ({ navigation }) => {
             style={{
               color: '#fff',
               width: '30%',
-              paddingLeft: 5,
               marginLeft: '5%',
             }}
           >
@@ -61,16 +62,16 @@ const Servicos = ({ navigation }) => {
           <Image size={184} source={require('../../images/user.png')} />
         </View>
         <View
-          style={{ alignItems: 'center', minHeight: '75%', paddingTop: 50 }}
+          style={{ alignItems: 'center', minHeight: '75%', paddingTop: '4%' }}
         >
           <Title>Victorio Robertson</Title>
           <Title style={{ fontSize: 15 }}>Segurança para Todos</Title>
-          <View style={{ alignItems: 'center', margin: 20 }}>
+          <View style={{ alignItems: 'center', margin: '2%' }}>
             <CustomSwitch
               selectionMode={1}
               roundCorner={true}
-              option1={'À Realizar'}
-              option2={'Realizados'}
+              option1={'Abertas'}
+              option2={'Fechadas'}
               onSelectSwitch={onSelectSwitch}
               selectionColor={'#219653'}
             />
@@ -78,15 +79,15 @@ const Servicos = ({ navigation }) => {
           <View style={{ display: 'flex', alignItems: 'center' }}>
             {tabSelected == 1 ? (
               <>
-                {servicos.map((servico) => (
+                {atividade.map((info) => (
                   <>
-                    {console.log(servico)}
                     <View
+                      key={info.id}
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
                         width: '90%',
-                        paddingBottom: 15,
+                        paddingBottom: '2%',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                       }}
@@ -97,19 +98,14 @@ const Servicos = ({ navigation }) => {
                       />
 
                       <View>
-                        <Title>{servico.nome}</Title>
+                        <Title>{info.descricao}</Title>
                         <Text style={{ width: '80%' }}>
                           Visitar todas áreas do estacionament.
                         </Text>
                       </View>
                       <View>
-                        <Text style={{ color: '#BDBDBD' }}>
-                          {moment(servico.criado_dt).format('DD-MM-YYYY')}
-                        </Text>
-                        <Text style={{ color: '#BDBDBD' }}>
-                          {' '}
-                          {moment(servico.criado_dt).format('HH:mm')}
-                        </Text>
+                        <Text style={{ color: '#BDBDBD' }}>11-11-21</Text>
+                        <Text style={{ color: '#BDBDBD' }}>21:00</Text>
                       </View>
                     </View>
                     <Divider
@@ -130,7 +126,7 @@ const Servicos = ({ navigation }) => {
                     display: 'flex',
                     flexDirection: 'row',
                     width: '90%',
-                    paddingBottom: 15,
+                    paddingBottom: '2%',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                   }}
@@ -164,7 +160,7 @@ const Servicos = ({ navigation }) => {
                     display: 'flex',
                     flexDirection: 'row',
                     width: '90%',
-                    paddingBottom: 15,
+                    paddingBottom: '2%',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                   }}
@@ -198,7 +194,7 @@ const Servicos = ({ navigation }) => {
                     display: 'flex',
                     flexDirection: 'row',
                     width: '90%',
-                    paddingBottom: 15,
+                    paddingBottom: '2%',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                   }}
@@ -232,7 +228,7 @@ const Servicos = ({ navigation }) => {
                     display: 'flex',
                     flexDirection: 'row',
                     width: '90%',
-                    paddingBottom: 15,
+                    paddingBottom: '2%',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                   }}
@@ -268,42 +264,26 @@ const Servicos = ({ navigation }) => {
                 flexDirection: 'row',
                 margin: 5,
                 width: '100%',
-                paddingBottom: 15,
+                paddingBottom: '2%',
                 justifyContent: 'space-around',
               }}
             >
               <TouchableNativeFeedback
                 style={{
-                  backgroundColor: '#219653',
                   height: 54,
-                  borderRadius: 25,
-                  padding: 10,
-                  width: '200%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Image
-                  style={{ height: 30, width: 25 }}
-                  source={require('../../images/icon_navigate.png')}
-                />
-              </TouchableNativeFeedback>
-              <TouchableNativeFeedback
-                onPress={() => {
-                  navigation.navigate('Ocorrencias');
-                }}
-                style={{
-                  height: 54,
-                  alignItems: 'center',
-                  color: '#219653',
-                  marginLeft: 40,
                   backgroundColor: '#e8e8e8',
+
                   borderRadius: 25,
                   padding: 10,
+                  width: '100%',
+                  alignItems: 'center',
                   justifyContent: 'center',
                 }}
+                onPress={() => {
+                  navigation.navigate('Servicos');
+                }}
               >
-                <Text>Ocorrências</Text>
+                <Text>Serviços</Text>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback
                 onPress={() => {
@@ -311,15 +291,36 @@ const Servicos = ({ navigation }) => {
                 }}
                 style={{
                   height: 54,
-                  alignItems: 'center',
-                  color: '#219653',
                   backgroundColor: '#e8e8e8',
                   borderRadius: 25,
+                  padding: 10,
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text>Ocorrências</Text>
+              </TouchableNativeFeedback>
+              <TouchableNativeFeedback
+                style={{
+                  height: 54,
+                  alignItems: 'center',
+                  color: '#fff',
+                  backgroundColor: '#219653',
+
+                  borderRadius: 25,
+
                   padding: 10,
                   justifyContent: 'center',
                 }}
               >
-                <Text>Atividades</Text>
+                <Text
+                  style={{
+                    color: '#fff',
+                  }}
+                >
+                  Atividades
+                </Text>
               </TouchableNativeFeedback>
             </View>
           </View>
@@ -329,4 +330,4 @@ const Servicos = ({ navigation }) => {
   );
 };
 
-export default Servicos;
+export default Atividades;
