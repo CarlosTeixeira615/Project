@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   View,
@@ -7,24 +7,24 @@ import {
   ToastAndroid,
   ScrollView,
   Image,
-} from "react-native";
-import MapView, { PROVIDER_GOOGLE, Heatmap } from "react-native-maps";
-import { useLocation } from "../../hooks/localization/index";
-import { markers } from "../../utils/Markers";
-import MarkerImpl from "../../Components/MarkerImpl";
-import Fab from "../../Components/Fab";
-import MapViewDirections from "react-native-maps-directions";
-import { Title } from "react-native-paper";
-import moment from "moment";
-import { set } from "react-native-reanimated";
+} from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Heatmap } from 'react-native-maps';
+import { useLocation } from '../../hooks/localization/index';
+import { markers } from '../../utils/Markers';
+import MarkerImpl from '../../Components/MarkerImpl';
+import Fab from '../../Components/Fab';
+import MapViewDirections from 'react-native-maps-directions';
+import { Title } from 'react-native-paper';
+import moment from 'moment';
+import { set } from 'react-native-reanimated';
 const mapView = ({ navigation }) => {
   const [latitude, setLatitude] = useState(-20.398259);
   const [longitude, setLongitude] = useState(-43.507726);
-  const [GOOGLE_API_KEY] = useState("AIzaSyCRbPRryTolmhNlMIp0y0dEutmIDO75MaM");
+  const [GOOGLE_API_KEY] = useState('AIzaSyCRbPRryTolmhNlMIp0y0dEutmIDO75MaM');
   const [heatmapMode, setHeatmapMode] = useState(false);
   const [routeMode, setRouteMode] = useState(false);
   const [hora, setHora] = useState(
-    moment().subtract(3, "hours").format("HH:mm")
+    moment().subtract(3, 'hours').format('HH:mm')
   );
   const [localDirection, setLocalDirection] = useState(null);
   const [mapMarkers, setMapMarkers] = useState(markers);
@@ -64,7 +64,6 @@ const mapView = ({ navigation }) => {
     }
   }, [errorMsg]);
 
-  console.log(coords);
   return (
     <>
       {!coords || errorMsg ? (
@@ -72,16 +71,16 @@ const mapView = ({ navigation }) => {
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#fff",
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#fff',
             }}
           >
-            <ActivityIndicator size="large" color={"#b11111"} />
+            <ActivityIndicator size='large' color={'#b11111'} />
             <Text
               style={{
                 marginTop: 10,
-                color: "#000",
+                color: '#000',
               }}
             >
               Carregando o mapa...
@@ -98,9 +97,9 @@ const mapView = ({ navigation }) => {
             showsMyLocationButton={false}
             toolbarEnabled={false}
             style={{
-              height: "100%",
-              width: "100%",
-              position: "absolute",
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
             }}
             initialRegion={{
               latitude,
@@ -129,11 +128,11 @@ const mapView = ({ navigation }) => {
             {routeMode ? (
               <MapViewDirections
                 strokeWidth={3}
-                strokeColor="red"
+                strokeColor='red'
                 origin={coords}
                 destination={localDirection}
                 apikey={GOOGLE_API_KEY}
-                mode="DRIVING"
+                mode='DRIVING'
               />
             ) : null}
           </MapView>
@@ -376,9 +375,9 @@ const mapView = ({ navigation }) => {
             </View>
           </View> */}
           <Fab
-            iconName="add"
-            iconColor={"#b11111"}
-            color={"#fff"}
+            iconName='add'
+            iconColor={'#b11111'}
+            color={'#fff'}
             containerStyle={{ right: 16, bottom: 30 }}
             onPress={() => {
               const lastMarker = mapMarkers[mapMarkers.length - 1];
@@ -399,9 +398,9 @@ const mapView = ({ navigation }) => {
           />
 
           <Fab
-            iconName="gps-fixed"
-            iconColor={"#b11111"}
-            color={"#fff"}
+            iconName='gps-fixed'
+            iconColor={'#b11111'}
+            color={'#fff'}
             containerStyle={{ right: 20, bottom: 90 }}
             onPress={() => {
               mapRef.current.animateToRegion({
@@ -415,9 +414,9 @@ const mapView = ({ navigation }) => {
             iconSize={35}
           />
           <Fab
-            iconName="explore"
-            iconColor={"#b11111"}
-            color={"#fff"}
+            iconName='explore'
+            iconColor={'#b11111'}
+            color={'#fff'}
             containerStyle={{ right: 20, bottom: 135 }}
             onPress={() => {
               setRouteMode(!routeMode);
@@ -426,9 +425,9 @@ const mapView = ({ navigation }) => {
           />
 
           <Fab
-            iconName="bubble-chart"
-            iconColor={"#b11111"}
-            color={"#fff"}
+            iconName='bubble-chart'
+            iconColor={'#b11111'}
+            color={'#fff'}
             containerStyle={{ right: 20, bottom: 180 }}
             iconSize={35}
             onPress={async () => {

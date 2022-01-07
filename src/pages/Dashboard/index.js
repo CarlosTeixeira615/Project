@@ -255,7 +255,6 @@ const Dashboard = ({ navigation }) => {
                   borderRadius: 15,
                 }}
                 mode='contained'
-                onPress={() => console.log('Pressed')}
               >
                 Enviar
               </Button>

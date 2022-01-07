@@ -24,7 +24,6 @@ const Login = ({ navigation }) => {
             right={
               <TextInput.Affix
                 text="/100"
-                onPress={() => console.log("teste")}
               />
             }
           />

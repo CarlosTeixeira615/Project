@@ -80,7 +80,6 @@ const Servicos = ({ navigation }) => {
               <>
                 {servicos.map((servico) => (
                   <>
-                    {console.log(servico)}
                     <View
                       style={{
                         display: 'flex',
