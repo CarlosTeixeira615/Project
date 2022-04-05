@@ -1,5 +1,6 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import Login from '../pages/Login';
 
 const App = createStackNavigator();
 
@@ -9,8 +10,10 @@ const AppRoutes = () => (
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Home"
-    ></App.Navigator>
+      initialRouteName='Login'
+    >
+      <App.Screen name='Login' component={Login} />
+    </App.Navigator>
   </>
 );
 
