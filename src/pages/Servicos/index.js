@@ -81,6 +81,7 @@ const Servicos = ({ navigation }) => {
                 {servicos.map((servico) => (
                   <>
                     <View
+                      key={servico.id}
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
@@ -103,11 +104,15 @@ const Servicos = ({ navigation }) => {
                       </View>
                       <View>
                         <Text style={{ color: '#BDBDBD' }}>
-                          {moment(servico.criado_dt).format('DD-MM-YYYY')}
+                          {servico.nome
+                            ? moment(servico.criado_dt).format('DD-MM-YYYY')
+                            : ''}
                         </Text>
                         <Text style={{ color: '#BDBDBD' }}>
                           {' '}
-                          {moment(servico.criado_dt).format('HH:mm')}
+                          {servico.nome
+                            ? moment(servico.criado_dt).format('HH:mm')
+                            : ''}
                         </Text>
                       </View>
                     </View>
@@ -306,6 +311,8 @@ const Servicos = ({ navigation }) => {
               </TouchableNativeFeedback>
               <TouchableNativeFeedback
                 onPress={() => {
+                  alert('data');
+
                   navigation.navigate('Atividades');
                 }}
                 style={{

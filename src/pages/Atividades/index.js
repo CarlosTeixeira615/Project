@@ -4,9 +4,14 @@ import { Title, Divider, Text } from 'react-native-paper';
 import CustomSwitch from '../../Components/CustomSwitch';
 import { View, Image } from 'react-native';
 import api from '../../services/api/index';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-
-const Atividades = ({ navigation }) => {
+import {
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
+import moment from 'moment';
+import { useNavigation } from '@react-navigation/native';
+const Atividades = () => {
+  const navigation = useNavigation();
   const [tabSelected, setTabSelected] = useState(1);
   const [atividade, setatividade] = useState([]);
 
@@ -79,10 +84,17 @@ const Atividades = ({ navigation }) => {
           <View style={{ display: 'flex', alignItems: 'center' }}>
             {tabSelected == 1 ? (
               <>
-                {atividade.map((info) => (
-                  <>
+                {atividade?.map((info) => (
+                  <TouchableOpacity
+                    key={info.id}
+                    onPress={() =>
+                      navigation.navigate(`AtividadesItens`, {
+                        name: 'AtividadeItensItens',
+                        id: info.id,
+                      })
+                    }
+                  >
                     <View
-                      key={info.id}
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
@@ -106,10 +118,14 @@ const Atividades = ({ navigation }) => {
                       <View>
                         <Text style={{ color: '#BDBDBD' }}>
                           {' '}
-                          {moment(info.criado_dt).format('DD-MM-YYYY')}
+                          {info.criado_dt
+                            ? moment(info.criado_dt).format('DD-MM-YYYY')
+                            : ''}
                         </Text>
                         <Text style={{ color: '#BDBDBD' }}>
-                          {moment(info.criado_dt).format('HH:mm')}
+                          {info.criado_dt
+                            ? moment(info.criado_dt).format('HH:mm')
+                            : ''}
                         </Text>
                       </View>
                     </View>
@@ -121,7 +137,7 @@ const Atividades = ({ navigation }) => {
                         justifyContent: 'center',
                       }}
                     />
-                  </>
+                  </TouchableOpacity>
                 ))}
               </>
             ) : (

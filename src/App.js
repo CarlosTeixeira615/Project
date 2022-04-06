@@ -5,16 +5,19 @@
  * @format
  * @flow strict-local
  */
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import Routes from "./routes";
-import { StatusBar } from "react-native";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Routes from './routes';
+import { StatusBar } from 'react-native';
+import AppProvider from './hooks/Auth';
 const App = () => {
   return (
     <NavigationContainer>
-      <StatusBar translucent backgroundColor="transparent" />
+      <AppProvider>
+        <StatusBar translucent backgroundColor='transparent' />
 
-      <Routes />
+        <Routes />
+      </AppProvider>
     </NavigationContainer>
   );
 };

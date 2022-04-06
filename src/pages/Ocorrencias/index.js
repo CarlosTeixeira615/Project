@@ -4,7 +4,11 @@ import { Title, Divider, Text } from 'react-native-paper';
 import CustomSwitch from '../../Components/CustomSwitch';
 import { View, Image } from 'react-native';
 import api from '../../services/api/index';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import {
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
+import moment from 'moment';
 
 const Ocorrencias = ({ navigation }) => {
   const [tabSelected, setTabSelected] = useState(1);
@@ -17,6 +21,7 @@ const Ocorrencias = ({ navigation }) => {
   const getOcorrencias = async () => {
     let url = `/ocorrencia/all`;
     const response = await api.get(url);
+    console.log(response.data);
     setOcorrencia(response.data);
   };
 
@@ -79,45 +84,59 @@ const Ocorrencias = ({ navigation }) => {
           <View style={{ display: 'flex', alignItems: 'center' }}>
             {tabSelected == 1 ? (
               <>
-                {ocorrencia.map((info) => (
-                  <>
-                    <View
-                      key={info.id}
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '90%',
-                        paddingBottom: '2%',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <Image
-                        style={{ height: 40, width: 40 }}
-                        source={require('../../images/selected_green.png')}
-                      />
+                {ocorrencia.map(
+                  (info) => (
+                    console.log(info),
+                    (
+                      <View key={info.id}>
+                        <TouchableOpacity
+                          key={info.id}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '90%',
+                            paddingBottom: '2%',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                          }}
+                          onPress={() => console.log(info.id)}
+                        >
+                          <Image
+                            style={{ height: 40, width: 40 }}
+                            source={require('../../images/selected_green.png')}
+                          />
 
-                      <View>
-                        <Title>{info.descricao}</Title>
-                        <Text style={{ width: '80%' }}>
-                          Visitar todas áreas do estacionament.
-                        </Text>
+                          <View>
+                            <Title>{info.descricao}</Title>
+                            <Text style={{ width: '80%' }}>
+                              Visitar todas áreas do estacionament.
+                            </Text>
+                          </View>
+                          <View>
+                            <Text style={{ color: '#BDBDBD' }}>
+                              {info.creado_dt
+                                ? moment(info.criado_dt).format('L')
+                                : ''}
+                            </Text>
+                            <Text style={{ color: '#BDBDBD' }}>
+                              {info.creado_dt
+                                ? moment(info.criado_dt).format('HH:mm')
+                                : ''}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <Divider
+                          style={{
+                            height: '0.3%',
+                            alignItems: 'center',
+                            width: '80%',
+                            justifyContent: 'center',
+                          }}
+                        />
                       </View>
-                      <View>
-                        <Text style={{ color: '#BDBDBD' }}>11-11-21</Text>
-                        <Text style={{ color: '#BDBDBD' }}>21:00</Text>
-                      </View>
-                    </View>
-                    <Divider
-                      style={{
-                        height: '0.3%',
-                        alignItems: 'center',
-                        width: '80%',
-                        justifyContent: 'center',
-                      }}
-                    />
-                  </>
-                ))}
+                    )
+                  )
+                )}
               </>
             ) : (
               <>
@@ -310,7 +329,8 @@ const Ocorrencias = ({ navigation }) => {
               </TouchableNativeFeedback>
               <TouchableNativeFeedback
                 onPress={() => {
-                  navigation.navigate('Atividades');
+                  alert('data');
+                  // navigation.navigate('Atividades');
                 }}
                 style={{
                   height: 54,

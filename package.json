@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "web": "react-native-web run",
     "test": "jest",
     "lint": "eslint .",
     "release": "cd android && ./gradlew assembleRelease"
